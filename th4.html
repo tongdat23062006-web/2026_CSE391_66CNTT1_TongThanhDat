@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài Thực Hành 04</title>
+
+<style>
+
+*{
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial;
+margin:0;
+background:linear-gradient(135deg,#4facfe,#00f2fe);
+padding:30px;
+}
+
+.container{
+max-width:1100px;
+margin:auto;
+}
+
+.card{
+background:white;
+border-radius:10px;
+padding:20px;
+margin-bottom:30px;
+box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+h2{
+margin-top:0;
+color:#333;
+border-left:6px solid #4facfe;
+padding-left:10px;
+}
+
+input,select{
+padding:8px;
+border-radius:5px;
+border:1px solid #ccc;
+margin:5px;
+}
+
+button{
+padding:8px 15px;
+border:none;
+border-radius:5px;
+background:#4facfe;
+color:white;
+cursor:pointer;
+}
+
+button:hover{
+background:#2f7ef7;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:15px;
+}
+
+th{
+background:#4facfe;
+color:white;
+padding:10px;
+}
+
+td{
+padding:8px;
+border-bottom:1px solid #ddd;
+text-align:center;
+}
+
+tr:hover{
+background:#f1f7ff;
+}
+
+.low{
+background:#fff3cd;
+}
+
+.stats{
+margin-top:10px;
+font-weight:bold;
+color:#333;
+}
+
+.error{
+color:red;
+font-size:13px;
+}
+
+.total{
+font-size:20px;
+font-weight:bold;
+color:#e91e63;
+}
+
+.success{
+color:green;
+font-size:20px;
+font-weight:bold;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- ================== -->
+<div class="card">
+
+<h2>Quản lý điểm sinh viên</h2>
+
+<input id="name" placeholder="Họ tên">
+<input id="score" type="number" placeholder="Điểm">
+
+<button onclick="addStudent()">Thêm</button>
+
+<br>
+
+<input id="search" placeholder="Tìm sinh viên">
+
+<select id="filter">
+<option value="all">Tất cả</option>
+<option value="Giỏi">Giỏi</option>
+<option value="Khá">Khá</option>
+<option value="Trung bình">Trung bình</option>
+<option value="Yếu">Yếu</option>
+</select>
+
+<button onclick="toggleSort()">Sắp xếp điểm</button>
+
+<table>
+
+<thead>
+<tr>
+<th>STT</th>
+<th>Họ tên</th>
+<th>Điểm</th>
+<th>Xếp loại</th>
+<th>Xóa</th>
+</tr>
+</thead>
+
+<tbody id="tableBody"></tbody>
+
+</table>
+
+<div class="stats" id="stats"></div>
+
+</div>
+
+
+<!-- ================== -->
+<div class="card">
+
+<h2>Form đăng ký</h2>
+
+<form id="registerForm">
+
+<input id="fullname" placeholder="Họ tên">
+<div class="error" id="nameError"></div>
+
+<input id="email" placeholder="Email">
+<div class="error" id="emailError"></div>
+
+<input id="phone" placeholder="SĐT">
+<div class="error" id="phoneError"></div>
+
+<input id="password" type="password" placeholder="Mật khẩu">
+<div class="error" id="passError"></div>
+
+<input id="confirm" type="password" placeholder="Xác nhận mật khẩu">
+<div class="error" id="confirmError"></div>
+
+<br>
+
+<label><input type="radio" name="gender"> Nam</label>
+<label><input type="radio" name="gender"> Nữ</label>
+
+<br><br>
+
+<label>
+<input type="checkbox" id="terms"> Đồng ý điều khoản
+</label>
+
+<br><br>
+
+<button type="submit">Đăng ký</button>
+
+</form>
+
+<div class="success" id="success"></div>
+
+</div>
+
+
+<!-- ================== -->
+<div class="card">
+
+<h2>Đặt hàng</h2>
+
+<select id="product">
+<option value="">Chọn sản phẩm</option>
+<option value="ao">Áo</option>
+<option value="quan">Quần</option>
+</select>
+
+<input id="quantity" type="number" value="1" min="1">
+
+<p>Tổng tiền:</p>
+
+<div class="total" id="total">0</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* ======================
+BÀI 1
+====================== */
+
+let students=[]
+let sortAsc=true
+
+function rank(score){
+
+if(score>=8.5) return "Giỏi"
+if(score>=7) return "Khá"
+if(score>=5) return "Trung bình"
+return "Yếu"
+
+}
+
+function addStudent(){
+
+let name=document.getElementById("name").value.trim()
+let score=parseFloat(document.getElementById("score").value)
+
+if(name=="" || score<0 || score>10){
+
+alert("Dữ liệu không hợp lệ")
+return
+
+}
+
+students.push({name,score})
+
+render()
+
+document.getElementById("name").value=""
+document.getElementById("score").value=""
+
+}
+
+function deleteStudent(index){
+
+students.splice(index,1)
+
+render()
+
+}
+
+function toggleSort(){
+
+sortAsc=!sortAsc
+
+render()
+
+}
+
+document.getElementById("search").addEventListener("input",render)
+document.getElementById("filter").addEventListener("change",render)
+
+function render(){
+
+let keyword=document.getElementById("search").value.toLowerCase()
+let type=document.getElementById("filter").value
+
+let list=students.filter(s=>{
+
+let okName=s.name.toLowerCase().includes(keyword)
+let okRank=(type==="all" || rank(s.score)===type)
+
+return okName && okRank
+
+})
+
+list.sort((a,b)=> sortAsc ? a.score-b.score : b.score-a.score)
+
+let tbody=document.getElementById("tableBody")
+
+tbody.innerHTML=""
+
+list.forEach((s,i)=>{
+
+let tr=document.createElement("tr")
+
+if(s.score<5) tr.classList.add("low")
+
+tr.innerHTML=`
+
+<td>${i+1}</td>
+<td>${s.name}</td>
+<td>${s.score}</td>
+<td>${rank(s.score)}</td>
+<td><button onclick="deleteStudent(${students.indexOf(s)})">Xóa</button></td>
+
+`
+
+tbody.appendChild(tr)
+
+})
+
+let avg=0
+
+students.forEach(s=>avg+=s.score)
+
+avg=students.length? (avg/students.length).toFixed(2):0
+
+document.getElementById("stats").innerText=
+
+"Tổng sinh viên: "+students.length+" | Điểm TB: "+avg
+
+}
+
+
+/* ======================
+BÀI 2.1
+====================== */
+
+let emailRegex=/^[^\s@]+@[^\s@]+\.[^\s@]+$/
+let phoneRegex=/^0[0-9]{9}$/
+let passRegex=/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/
+
+document.getElementById("registerForm").addEventListener("submit",function(e){
+
+e.preventDefault()
+
+let ok=true
+
+document.querySelectorAll(".error").forEach(e=>e.innerText="")
+
+let name=document.getElementById("fullname").value
+
+if(name.length<3){
+
+document.getElementById("nameError").innerText="Tên quá ngắn"
+
+ok=false
+
+}
+
+let email=document.getElementById("email").value
+
+if(!emailRegex.test(email)){
+
+document.getElementById("emailError").innerText="Email sai"
+
+ok=false
+
+}
+
+let phone=document.getElementById("phone").value
+
+if(!phoneRegex.test(phone)){
+
+document.getElementById("phoneError").innerText="SĐT sai"
+
+ok=false
+
+}
+
+let pass=document.getElementById("password").value
+
+if(!passRegex.test(pass)){
+
+document.getElementById("passError").innerText="Mật khẩu yếu"
+
+ok=false
+
+}
+
+let confirm=document.getElementById("confirm").value
+
+if(pass!==confirm){
+
+document.getElementById("confirmError").innerText="Không khớp"
+
+ok=false
+
+}
+
+if(!document.getElementById("terms").checked){
+
+alert("Bạn phải đồng ý điều khoản")
+
+ok=false
+
+}
+
+if(ok){
+
+document.getElementById("registerForm").style.display="none"
+
+document.getElementById("success").innerText=
+
+"Đăng ký thành công 🎉"
+
+}
+
+})
+
+
+/* ======================
+BÀI 2.2
+====================== */
+
+const prices={
+
+ao:150000,
+quan:200000
+
+}
+
+function calc(){
+
+let p=document.getElementById("product").value
+let q=document.getElementById("quantity").value
+
+if(!p){
+
+document.getElementById("total").innerText=0
+return
+
+}
+
+let total=prices[p]*q
+
+document.getElementById("total").innerText=
+
+total.toLocaleString("vi-VN")+" đ"
+
+}
+
+document.getElementById("product").addEventListener("change",calc)
+document.getElementById("quantity").addEventListener("input",calc)
+
+</script>
+
+</body>
+</html>
