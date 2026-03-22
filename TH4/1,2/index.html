@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="./static/style.css">
+</head>
+<body>
+    <div id="board">
+        <form class="search" onsubmit="return false;">
+            <input id="searchInput" type="text" class="data__input search-bar" placeholder="Tìm kiếm sinh viên">
+            <button id="searchBtn" class="search-btn"><i class="fa fa-search"></i></button>
+        </form>
+
+        <form class="data" onsubmit="return false;">
+            <div class="data__row">
+                <label class="data__label">Họ Tên: </label>
+                <input id="nameInput" class="data__input name" type="text">
+            </div>
+            <div class="data__row">
+                <label class="data__label">Điểm: </label>
+                <input id="scoreInput" class="data__input score" type="text">
+            </div>
+        </form>
+
+        <button class="btn--add">+ Thêm</button>
+
+        <select id="rankFilter">
+            <option value="All">Tất cả</option>
+            <option value="Giỏi">Giỏi</option>
+            <option value="Khá">Khá</option>
+            <option value="Trung bình">Trung bình</option>
+            <option value="Yếu">Yếu</option>
+        </select>
+
+        <table border="1" cellpadding="5" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Họ Tên</th>
+                    <th id="sort">Điểm</th>
+                    <th>Xếp hạng</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+
+            <tbody id="studentTable"></tbody>
+        </table>
+
+         <p id="stats"></p>
+    </div>
+    <script src="./main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+</html>

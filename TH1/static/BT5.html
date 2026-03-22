@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./static/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <header>
+      <div class="left">
+          <strong>HR Management</strong>
+          <a href="#">Home</a>
+          <a href="#">Contact</a>
+      </div>
+      <div>
+          <input type="text" placeholder="Search...">
+          <button>Search</button>
+      </div>
+  </header>
+
+  <main>
+      <div class="title">
+          <h2>Employee</h2>
+          <button class="add-btn">+ Add</button>
+      </div>
+
+      <table>
+          <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Position</th>
+              <th>Action</th>
+          </tr>
+          <tr>
+              <td>1</td>
+              <td>Fatima Beatriz</td>
+              <td>FatimaBeatriz@gmail.com</td>
+              <td>0985674321</td>
+              <td>Staff</td>
+              <td>
+                  <button class="btn-edit">Edit</button>
+                  <button class="btn-delete">Delete</button>
+              </td>
+          </tr>
+          <tr>
+              <td>2</td>
+              <td>Gabriel Hanna</td>
+              <td>GabrielHanna@gmail.com</td>
+              <td>0353674231</td>
+              <td>Staff</td>
+              <td>
+                  <button class="btn-edit">Edit</button>
+                  <button class="btn-delete">Delete</button>
+              </td>
+          </tr>
+      </table>
+  </main>
+
+  <!-- MODAL -->
+  <div class="modal">
+      <div class="modal-header">
+          <span>New Employee</span>
+          <span>X</span>
+      </div>
+      <div class="modal-body">
+          <div class="form-group">
+              <label>Name</label>
+              <input type="text">
+          </div>
+
+          <div class="form-group">
+              <label>Email</label>
+              <input type="email">
+          </div>
+
+          <div class="form-group">
+              <label>Phone</label>
+              <input type="text">
+          </div>
+
+          <div class="form-group">
+              <label>Position</label>
+              <select>
+                  <option>-- Select Position --</option>
+                  <option>Staff</option>
+                  <option>Manager</option>
+                  <option>CEO</option>
+              </select>
+          </div>
+
+          <div class="form-group">
+              <label>Sex</label>
+              <div class="radio-group">
+                  <label><input type="radio" name="sex"> Male</label>
+                  <label><input type="radio" name="sex"> Female</label>
+              </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+          <button class="save-btn">Save</button>
+          <button class="cancel-btn">Cancel</button>
+      </div>
+  </div>
+</body>
+</html>
