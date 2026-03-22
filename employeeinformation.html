@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Form</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f2f2f2;
+        }
+
+        .container {
+            width: 600px;
+            margin: 30px auto;
+            background: #fff;
+            padding: 20px;
+            border: 1px solid #ccc;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-row {
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+        .form-row label {
+            width: 160px;
+            font-size: 14px;
+        }
+
+        .form-row input,
+        .form-row select,
+        .form-row textarea {
+            flex: 1;
+            padding: 5px;
+        }
+
+        textarea {
+            height: 100px;
+        }
+
+        .buttons {
+            text-align: right;
+            margin-top: 15px;
+        }
+
+        .buttons input {
+            padding: 6px 15px;
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <form>
+
+        <h2>Employee Information</h2>
+
+        <div class="form-row">
+            <label>Employee ID</label>
+            <input type="text" value="9" readonly>
+        </div>
+
+        <div class="form-row">
+            <label>Full Name</label>
+            <input type="text" value="Anne Dodsworth">
+        </div>
+
+        <div class="form-row">
+            <label>Gender</label>
+            <div>
+                <input type="radio" name="gender"> Male
+                <input type="radio" name="gender"> Female
+                <input type="radio" name="gender" checked> ZZZ
+            </div>
+        </div>
+
+        <div class="form-row">
+            <label>Title</label>
+            <input type="text" value="Sales Representative">
+        </div>
+
+        <div class="form-row">
+            <label>Birth Date</label>
+            <input type="date">
+        </div>
+
+        <div class="form-row">
+            <label>Notes</label>
+            <textarea>
+Anne has a BA degree in English.
+She is fluent in French and German.
+            </textarea>
+        </div>
+
+        <div class="form-row">
+            <label>Active?</label>
+            <input type="checkbox" checked>
+        </div>
+
+        <div class="buttons">
+            <input type="submit" value="Submit">
+            <input type="reset" value="Cancel">
+        </div>
+
+    </form>
+</div>
+
+</body>
+</html>
